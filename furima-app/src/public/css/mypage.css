@@ -1,0 +1,96 @@
+body {
+    margin: 0;
+    background: #fff;
+}
+
+header {
+    background: #000;
+    padding: 20px 40px;
+}
+
+header img {
+    width: 280px;
+}
+
+.mypage__profile {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 80px;
+    padding: 70px 0;
+}
+
+.mypage__icon {
+    width: 140px;
+    height: 140px;
+    background: #d9d9d9;
+    border-radius: 50%;
+}
+
+.mypage__name {
+    font-size: 32px;
+}
+
+.mypage__edit {
+    color: #ff5555;
+    border: 2px solid #ff5555;
+    border-radius: 8px;
+    padding: 12px 25px;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.mypage__tabs {
+    border-bottom: 1px solid #777;
+    padding-left: 120px;
+}
+
+.mypage__tab {
+    display: inline-block;
+    padding: 25px 40px;
+    text-decoration: none;
+    color: #555;
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.mypage__tab--active {
+    color: red;
+}
+
+.header-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.search-form input {
+    width: 400px;
+    height: 38px;
+    padding: 0 15px;
+    font-size: 16px;
+}
+
+nav {
+    display: flex;
+    align-items: center;
+    gap: 25px;
+}
+
+nav a,
+nav button {
+    color: white;
+    background: none;
+    border: none;
+    font-size: 18px;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.sell-button {
+    background: white;
+    color: black;
+    padding: 10px 20px;
+    border-radius: 5px;
+}

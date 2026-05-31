@@ -1,0 +1,79 @@
+body {
+    margin: 0;
+    background: #fff;
+}
+
+h1 {
+    text-align: center;
+    margin: 40px 0;
+}
+
+form {
+    width: 520px;
+    margin: 0 auto;
+}
+
+h2 {
+    margin-top: 35px;
+    border-bottom: 1px solid #aaa;
+    padding-bottom: 8px;
+}
+
+label {
+    display: block;
+    font-weight: bold;
+    margin-top: 18px;
+}
+
+input,
+textarea,
+select {
+    width: 100%;
+    box-sizing: border-box;
+    margin-top: 6px;
+    padding: 8px;
+}
+
+textarea {
+    height: 100px;
+}
+
+form>button {
+    width: 100%;
+    margin-top: 40px;
+    padding: 12px;
+    background: #ff5555;
+    color: white;
+    border: none;
+    font-weight: bold;
+}
+
+.image-upload {
+    border: 1px dashed #999;
+    height: 150px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.image-upload__button {
+    border: 1px solid #ff5555;
+    color: #ff5555;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.category-list {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.category-list button {
+    border: 1px solid #ff5555;
+    color: #ff5555;
+    background: white;
+    border-radius: 20px;
+    padding: 5px 15px;
+}

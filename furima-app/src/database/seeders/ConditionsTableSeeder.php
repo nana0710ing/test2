@@ -1,0 +1,32 @@
+<?php
+
+namespace Database\Seeders;
+
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use Illuminate\Database\Seeder;
+use App\Models\Condition;
+
+class ConditionsTableSeeder extends Seeder
+{
+    /**
+     * Run the database seeds.
+     */
+    public function run(): void
+    {
+        Condition::create([
+            'name' => '良好',
+        ]);
+
+        Condition::create([
+            'name' => '目立った傷や汚れなし',
+        ]);
+
+        Condition::create([
+            'name' => 'やや傷や汚れあり',
+        ]);
+
+        Condition::create([
+            'name' => '状態が悪い',
+        ]);
+    }
+}
