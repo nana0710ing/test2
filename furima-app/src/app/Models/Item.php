@@ -12,6 +12,17 @@ class Item extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+    'name',
+    'description',
+    'price',
+    'brand_name',
+    'condition_id',
+    'category_id',
+    'img_url',
+    'user_id',
+];
+
     public function likes()
     {
         return $this->hasMany(Like::class);

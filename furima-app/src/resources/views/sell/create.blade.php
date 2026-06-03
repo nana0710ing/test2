@@ -13,6 +13,13 @@
 
 <form action="/sell" method="POST" enctype="multipart/form-data">
     @csrf
+    @if ($errors->any())
+    <div style="color: red;">
+        @foreach ($errors->all() as $error)
+            <p>{{ $error }}</p>
+        @endforeach
+    </div>
+@endif
 
     <h2>商品画像</h2>
 
@@ -28,7 +35,10 @@
     <label>カテゴリー</label>
     <div class="category-list">
         @foreach ($categories as $category)
-            <button type="button">{{ $category->name }}</button>
+            <label class="category-button">
+            <input type="checkbox" name="category_ids[]" value="{{ $category->id }}">
+                <span>{{ $category->name }}</span>
+            </label>
         @endforeach
     </div>
 

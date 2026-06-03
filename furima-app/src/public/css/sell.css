@@ -70,10 +70,21 @@ form>button {
     flex-wrap: wrap;
 }
 
-.category-list button {
+.category-button input {
+    display: none;
+}
+
+.category-button span {
+    display: inline-block;
     border: 1px solid #ff5555;
     color: #ff5555;
     background: white;
     border-radius: 20px;
     padding: 5px 15px;
+    cursor: pointer;
+}
+
+.category-button input:checked+span {
+    background: #ff5555;
+    color: white;
 }

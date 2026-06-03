@@ -21,7 +21,7 @@
 <div class="detail">
 
     <div class="detail__image">
-        <img src="{{ $item->img_url }}" alt="{{ $item->name }}" width="400">
+        <img src="{{ asset($item->img_url) }}" alt="{{ $item->name }}" width="400">
     </div>
 
     <div class="detail__content">
@@ -70,13 +70,15 @@
 
         <h3>商品説明</h3>
 
-        <p>商品説明が入ります。</p>
+        {{ $item->description }}
 
         <h3>商品の情報</h3>
 
         <div class="info">
             <p>カテゴリー</p>
-            <span>メンズ</span>
+            @foreach ($item->categories as $category)
+                <span>{{ $category->name }}</span>
+            @endforeach
         </div>
 
         <div class="info">

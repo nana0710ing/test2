@@ -45,7 +45,8 @@
             @foreach ($items as $item)
             <div class="item">
                 <a href="/item/{{ $item->id }}">
-                    <img src="{{ $item->img_url }}" alt="{{ $item->name }}" width="200">
+                    <img src="{{ asset($item->img_url) }}"
+                    alt="{{ $item->name }}" width="200">
 
                     @if($item->purchase)
                         <p>Sold</p>
