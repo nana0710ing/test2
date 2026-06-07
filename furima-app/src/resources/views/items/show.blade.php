@@ -28,6 +28,7 @@
         <h1>{{ $item->name }}</h1>
 
         <p>ブランド名</p>
+        <p>{{ $item->brand_name ?? '' }}</p>
 
         <h2>¥{{ number_format($item->price) }} <span>(税込)</span></h2>
 
@@ -59,13 +60,9 @@
         @if($item->purchase)
             <p>Sold</p>
         @else
-            <form action="/purchase/{{ $item->id }}" method="post">
-        @csrf
-
-            <button class="purchase-button">
+            <a href="/purchase/{{ $item->id }}" class="purchase-button">
                 購入手続きへ
-            </button>
-        </form>
+            </a>
         @endif
 
         <h3>商品説明</h3>

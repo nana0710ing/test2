@@ -8,15 +8,22 @@ class ProfileController extends Controller
 {
     public function update(Request $request)
     {
-        $user = \App\Models\User::first();
+        $user = auth()->user();
 
-        $user->update([
+        $data = [
             'name' => $request->name,
             'postal_code' => $request->postal_code,
             'address' => $request->address,
             'building' => $request->building,
-        ]);
+        ];
 
-    return redirect('/mypage/profile');
+        if ($request->hasFile('image')) {
+            $path = $request->file('image')->store('images', 'public');
+            $data['image'] = 'storage/' . $path;
+        }
+
+        $user->update($data);
+
+    return redirect('/mypage');
     }
 }

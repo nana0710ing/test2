@@ -27,6 +27,12 @@ header img {
     border-radius: 50%;
 }
 
+.mypage__icon img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
 .mypage__name {
     font-size: 32px;
 }
@@ -93,4 +99,32 @@ nav button {
     color: black;
     padding: 10px 20px;
     border-radius: 5px;
+}
+
+.item-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 40px;
+    padding: 40px;
+}
+
+.item-card {
+    width: 200px;
+}
+
+.item-card img {
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+}
+
+.item-card a {
+    color: #000;
+    text-decoration: none;
+}
+
+.item-card__image {
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
 }

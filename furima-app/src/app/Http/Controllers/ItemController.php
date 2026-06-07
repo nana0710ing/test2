@@ -11,7 +11,12 @@ class ItemController extends Controller
     public function index(Request $request)
 
     {
-        $items = Item::where('name', 'like', '%' . $request->keyword . '%')->get();
+        $items = Item::where('name', 'like', '%' . $request->keyword . '%')
+            ->where(function ($query) {
+                $query->where('user_id', '!=', auth()->id())
+                ->orWhereNull('user_id');
+            })
+            ->get();
 
         return view('items.index', compact('items'));
     }

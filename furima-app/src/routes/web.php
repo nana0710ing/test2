@@ -7,6 +7,8 @@ use App\Http\Controllers\CommentController;
 use App\Http\Controllers\PurchaseController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SellController;
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -22,7 +24,8 @@ Route::get('/item/{item}', [ItemController::class, 'show']);
 Route::post('/like/{item}', [LikeController::class, 'store']);
 Route::post('/comment/{item_id}', [CommentController::class, 'store']);
 Route::get('/mylist', [ItemController::class, 'mylist']);
-Route::post('/purchase/{item_id}', [PurchaseController::class, 'store']);
+Route::get('/purchase/{item}', [PurchaseController::class, 'create'])->name('purchase.create');
+Route::post('/purchase/{item}', [PurchaseController::class, 'store'])->name('purchase.store');
 Route::get('/mypage/profile', function () {
     return view('profile.edit');
 });
@@ -32,3 +35,21 @@ Route::get('/mypage', function () {
 });
 Route::get('/sell', [SellController::class, 'create']);
 Route::post('/sell', [SellController::class, 'store']);
+Route::get('/purchase/address/{item_id}', function ($item_id) {
+    return view('address', compact('item_id'));
+});
+Route::post('/purchase/address/{item_id}', function ($item_id) {
+    $user = User::find(1);
+
+    $user->update([
+        'postal_code' => request('postal_code'),
+        'address' => request('address'),
+        'building' => request('building'),
+    ]);
+
+    return redirect('/purchase/' . $item_id);
+});
+Route::post('/logout', function () {
+    Auth::logout();
+    return redirect('/login');
+})->name('logout');

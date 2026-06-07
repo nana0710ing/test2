@@ -19,6 +19,14 @@
     <form class="form" method="POST" action="/register">
         @csrf
 
+        @if ($errors->any())
+    <div style="color: red;">
+        @foreach ($errors->all() as $error)
+            <p>{{ $error }}</p>
+        @endforeach
+    </div>
+        @endif
+
         <div class="form-group">
             <label>ユーザー名</label>
             <input type="text" name="name">

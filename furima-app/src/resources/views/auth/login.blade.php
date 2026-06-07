@@ -19,6 +19,27 @@
         <h1>ログイン</h1>
     </div>
 
+    @if ($errors->any())
+    <div style="color: red;">
+        @foreach ($errors->all() as $error)
+
+            @if ($error === 'The email field is required.')
+                <p>メールアドレスを入力してください</p>
+
+            @elseif ($error === 'The password field is required.')
+                <p>パスワードを入力してください</p>
+
+            @elseif ($error === 'These credentials do not match our records.')
+                <p>ログイン情報が登録されていません</p>
+
+            @else
+                <p>{{ $error }}</p>
+            @endif
+
+        @endforeach
+</div>
+@endif
+
     <form class="form" method="POST" action="/login">
         @csrf
 

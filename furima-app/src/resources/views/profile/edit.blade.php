@@ -20,7 +20,11 @@
         <form class="profile-form" action="/mypage/profile" method="POST" enctype="multipart/form-data">
             @csrf
             <div class="profile-form__image">
-                <div class="profile-form__circle"></div>
+                <div class="profile-form__circle">
+                    @if(auth()->user()->image)
+                        <img src="{{ asset(auth()->user()->image) }}" alt="プロフィール画像">
+                    @endif
+                </div>
                 <label class="profile-form__button">
                     画像を選択する
                 <input type="file" name="image" hidden>
@@ -29,22 +33,22 @@
 
             <div class="profile-form__group">
                 <label>ユーザー名</label>
-                <input type="text" name="name" value="{{ \App\Models\User::first()->name }}">
+                <input type="text" name="name" value="{{ auth()->user()->name }}">
             </div>
 
             <div class="profile-form__group">
                 <label>郵便番号</label>
-                <input type="text" name="postal_code" value="{{ \App\Models\User::first()->postal_code }}">
+                <input type="text" name="postal_code" value="{{ auth()->user()->postal_code }}">
             </div>
 
             <div class="profile-form__group">
                 <label>住所</label>
-                <input type="text" name="address" value="{{ \App\Models\User::first()->address }}">
+                <input type="text" name="address" value="{{ auth()->user()->address }}">
             </div>
 
             <div class="profile-form__group">
                 <label>建物名</label>
-                <input type="text" name="building" value="{{ \App\Models\User::first()->building }}">
+                <input type="text" name="building" value="{{ auth()->user()->building }}">
             </div>
 
             <button class="profile-form__submit">更新する</button>

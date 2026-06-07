@@ -27,10 +27,14 @@
 
 <main class="mypage">
     <div class="mypage__profile">
-        <div class="mypage__icon"></div>
+        <div class="mypage__icon">
+        @if(auth()->user()->image)
+            <img src="{{ asset(auth()->user()->image) }}" alt="プロフィール画像">
+        @endif
+        </div>
 
         <h2 class="mypage__name">
-            {{ \App\Models\User::first()->name }}
+            {{ auth()->user()->name }}
         </h2>
 
         <a class="mypage__edit" href="/mypage/profile">
@@ -39,9 +43,42 @@
     </div>
 
     <div class="mypage__tabs">
-        <a class="mypage__tab mypage__tab--active" href="/mypage?page=sell">出品した商品</a>
-        <a class="mypage__tab" href="/mypage?page=buy">購入した商品</a>
+        <a class="mypage__tab {{ request('page') !== 'buy' ? 'mypage__tab--active' : '' }}" href="/mypage?page=sell">出品した商品</a>
+
+        <a class="mypage__tab {{ request('page') === 'buy' ? 'mypage__tab--active' : '' }}" href="/mypage?page=buy">購入した商品</a>
     </div>
+
+    @if(request('page') !== 'buy')
+    <div class="item-list">
+        @foreach(\App\Models\Item::where('user_id', auth()->id())->get() as $item)
+            <div class="item-card">
+                <a href="/item/{{ $item->id }}">
+                <img
+                    src="{{ asset($item->img_url) }}"
+                    style="width:200px; height:200px; object-fit:cover;"
+>
+                <p>{{ $item->name }}</p>
+                </a>
+            </div>
+        @endforeach
+        </div>
+    @endif
+
+    @if(request('page') === 'buy')
+    <div class="item-list">
+        @foreach(\App\Models\Purchase::where('user_id', auth()->id())->get() as $purchase)
+        <div class="item-card">
+            <a href="/item/{{ $purchase->item->id }}">
+            <img
+                src="{{ asset($purchase->item->img_url) }}"
+                style="width:200px; height:200px; object-fit:cover;"
+>
+            <p>{{ $purchase->item->name }}</p>
+            </a>
+        </div>
+        @endforeach
+        </div>
+    @endif
 </main>
 </body>
 </html>

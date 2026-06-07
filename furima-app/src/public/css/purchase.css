@@ -1,0 +1,35 @@
+.purchase {
+    display: flex;
+    justify-content: space-between;
+    padding: 80px;
+}
+
+.purchase__left {
+    width: 60%;
+}
+
+.purchase__right {
+    width: 30%;
+}
+
+.purchase-summary {
+    border: 1px solid #000;
+}
+
+.purchase-summary__row {
+    display: flex;
+    justify-content: space-between;
+    padding: 30px;
+    border-bottom: 1px solid #000;
+}
+
+.purchase__button {
+    width: 100%;
+    padding: 15px;
+    margin-top: 30px;
+    background: #ff5555;
+    color: white;
+    border: none;
+    font-size: 24px;
+    font-weight: bold;
+}
