@@ -28,11 +28,11 @@ Route::get('/purchase/{item}', [PurchaseController::class, 'create'])->name('pur
 Route::post('/purchase/{item}', [PurchaseController::class, 'store'])->name('purchase.store');
 Route::get('/mypage/profile', function () {
     return view('profile.edit');
-});
+    })->middleware(['auth', 'verified']);
 Route::post('/mypage/profile', [ProfileController::class, 'update']);
 Route::get('/mypage', function () {
     return view('mypage');
-});
+})->middleware(['auth', 'verified']);
 Route::get('/sell', [SellController::class, 'create']);
 Route::post('/sell', [SellController::class, 'store']);
 Route::get('/purchase/address/{item_id}', function ($item_id) {

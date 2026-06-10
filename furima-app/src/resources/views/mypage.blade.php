@@ -28,13 +28,15 @@
 <main class="mypage">
     <div class="mypage__profile">
         <div class="mypage__icon">
-        @if(auth()->user()->image)
+        @if(optional(auth()->user())->image)
             <img src="{{ asset(auth()->user()->image) }}" alt="プロフィール画像">
+        @else
+        <div class="mypage__no-image">画像なし</div>
         @endif
         </div>
 
         <h2 class="mypage__name">
-            {{ auth()->user()->name }}
+            {{ optional(auth()->user())->name ?? 'ユーザー名未設定' }}
         </h2>
 
         <a class="mypage__edit" href="/mypage/profile">
