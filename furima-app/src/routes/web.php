@@ -39,7 +39,7 @@ Route::get('/purchase/address/{item_id}', function ($item_id) {
     return view('address', compact('item_id'));
 });
 Route::post('/purchase/address/{item_id}', function ($item_id) {
-    $user = User::find(1);
+    $user = auth()->user();
 
     $user->update([
         'postal_code' => request('postal_code'),
