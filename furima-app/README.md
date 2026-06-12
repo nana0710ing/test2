@@ -9,6 +9,7 @@
 ```bash
 docker-compose up -d --build
 ```
+
 ### Laravel環境構築
 
 ```bash
@@ -22,12 +23,35 @@ php artisan db:seed
 
 ## 使用技術
 
-- PHP
-- Laravel
-- MySQL
+- PHP 8.x
+- Laravel 8.x
+- MySQL 8.x
 - Docker
 - nginx
+- Stripe
 
 ## ER図
 
 ![ER図](images/furima_er.png)
+
+## URL
+
+- 開発環境：http://localhost:8080
+- phpMyAdmin：http://localhost:8081
+
+## 機能一覧
+
+- ユーザー登録
+- ログイン
+- メール認証
+- 商品一覧表示
+- 商品詳細表示
+- 商品検索
+- 商品出品
+- 商品購入
+- Stripe決済
+- コメント機能
+- いいね機能
+- マイリスト機能
+- プロフィール編集
+- 配送先変更
