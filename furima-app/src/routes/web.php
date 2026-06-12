@@ -53,3 +53,6 @@ Route::post('/logout', function () {
     Auth::logout();
     return redirect('/login');
 })->name('logout');
+
+Route::get('/purchase/success/{item}', [PurchaseController::class, 'success'])
+    ->name('purchase.success');
