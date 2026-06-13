@@ -24,7 +24,7 @@ php artisan db:seed
 ## 使用技術
 
 - PHP 8.x
-- Laravel 8.x
+- Laravel 10.x
 - MySQL 8.x
 - Docker
 - nginx
