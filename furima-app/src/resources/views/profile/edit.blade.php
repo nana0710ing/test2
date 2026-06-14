@@ -11,6 +11,22 @@
             <h1>
                 <img src="{{ asset('images/logo.png') }}" alt="COACHTECH">
             </h1>
+
+            <form class="search-box" action="/" method="get">
+            <input type="text" name="keyword" value="{{ request('keyword') }}" placeholder="なにをお探しですか？">
+            </form>
+
+            <nav>
+                @auth
+                    <form class="logout-form" action="/logout" method="post">
+                        @csrf
+                        <button class="logout-button" type="submit">ログアウト</button>
+            </form>
+                @endauth
+
+                <a href="/mypage">マイページ</a>
+                <a class="sell-button" href="/sell">出品</a>
+            </nav>
         </div>
     </header>
 
