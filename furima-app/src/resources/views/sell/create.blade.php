@@ -5,13 +5,40 @@
     <title>商品出品</title>
 
     <link rel="stylesheet" href="{{ asset('css/common.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/index.css') }}">
     <link rel="stylesheet" href="{{ asset('css/sell.css') }}">
 </head>
 <body>
 
-<h1>商品の出品</h1>
+<header>
+    <div class="header-inner">
+        <h1>
+            <img src="{{ asset('images/logo.png') }}" alt="COACHTECH">
+        </h1>
+    <form class="search-box" action="/" method="get">
+        <input type="text" name="keyword" value="{{ request('keyword') }}" placeholder="なにをお探しですか？">
+    </form>
+        <nav>
+            @guest
+                <a href="/login">ログイン</a>
+            @endguest
 
-<form action="/sell" method="POST" enctype="multipart/form-data">
+            @auth
+                <form class="logout-form" action="/logout" method="post">
+                    @csrf
+                    <button class="logout-button" type="submit">ログアウト</button>
+                </form>
+            @endauth
+
+            <a href="/mypage">マイページ</a>
+            <a href="/sell">出品</a>
+        </nav>
+    </div>
+    </header>
+
+<h1 class="sell-title">商品の出品</h1>
+
+<form class="sell-form" action="/sell" method="POST" enctype="multipart/form-data">
     @csrf
     @if ($errors->any())
     <div style="color: red;">

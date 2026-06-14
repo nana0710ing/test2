@@ -3,12 +3,12 @@ body {
     background: #fff;
 }
 
-h1 {
+.sell-title {
     text-align: center;
     margin: 40px 0;
 }
 
-form {
+.sell-form {
     width: 520px;
     margin: 0 auto;
 }
@@ -88,3 +88,28 @@ form>button {
     background: #ff5555;
     color: white;
 }
+
+.sell-title {
+    text-align: center;
+    margin: 40px 0;
+    font-size: 36px;
+}
+
+.sell-title {
+    color: #000;
+    text-align: center;
+    margin: 40px 0;
+}
+
+/*
+.logout-form {
+    display: flex;
+    align-items: center;
+}
+
+.logout-button {
+    display: flex;
+    align-items: center;
+    height: 24px;
+}
+*/
