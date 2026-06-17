@@ -101,15 +101,25 @@ form>button {
     margin: 40px 0;
 }
 
-/*
-.logout-form {
+.price-input {
     display: flex;
     align-items: center;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background: #fff;
 }
 
-.logout-button {
-    display: flex;
-    align-items: center;
-    height: 24px;
+.price-input span {
+    padding: 0 10px;
+    font-size: 15px;
+    font-weight: bold;
 }
-*/
+
+.price-input input {
+    border: none;
+    width: 100%;
+}
+
+.price-input input:focus {
+    outline: none;
+}

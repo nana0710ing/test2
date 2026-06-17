@@ -90,7 +90,10 @@
     <textarea name="description"></textarea>
 
     <label>販売価格</label>
-    <input type="text" name="price">
+    <div class="price-input">
+        <span>¥</span>
+        <input type="text" name="price">
+    </div>
 
     <button type="submit">出品する</button>
 

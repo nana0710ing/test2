@@ -20,7 +20,7 @@
     </div>
 
     @if ($errors->any())
-    <div style="color: red;">
+    <div class="error-message">
         @foreach ($errors->all() as $error)
 
             @if ($error === 'The email field is required.')
@@ -37,7 +37,7 @@
             @endif
 
         @endforeach
-</div>
+</>
 @endif
 
     <form class="form" method="POST" action="/login">

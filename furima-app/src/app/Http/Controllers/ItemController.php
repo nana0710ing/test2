@@ -22,7 +22,7 @@ class ItemController extends Controller
     }
     public function mylist(Request $request)
     {
-        $likes = Like::where('user_id', 1)->pluck('item_id');
+        $likes = Like::where('user_id', auth()->id())->pluck('item_id');
 
         $items = Item::whereIn('id', $likes)
             ->where('name', 'like', '%' . $request->keyword . '%')

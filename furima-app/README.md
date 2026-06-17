@@ -55,3 +55,9 @@ php artisan db:seed
 - マイリスト機能
 - プロフィール編集
 - 配送先変更
+
+メール認証機能を実装しています。
+認証メールはMailHogで確認できます。
+
+MailHog:
+http://localhost:8025

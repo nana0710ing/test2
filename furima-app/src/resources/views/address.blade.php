@@ -1,7 +1,15 @@
+@extends('layouts.app')
+
+@section('css')
+<link rel="stylesheet" href="{{ asset('css/address.css') }}">
+@endsection
+
+@section('content')
 <h1>住所の変更</h1>
 
 <form action="/purchase/address/{{ $item_id }}" method="post">
     @csrf
+
     <p>郵便番号</p>
     <input type="text" name="postal_code">
 
@@ -13,3 +21,4 @@
 
     <button type="submit">更新する</button>
 </form>
+@endsection

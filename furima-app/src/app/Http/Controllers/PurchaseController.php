@@ -26,6 +26,14 @@ class PurchaseController extends Controller
 {
     $item = Item::findOrFail($item_id);
 
+    $user = auth()->user();
+
+    if (empty($user->postal_code) || empty($user->address)) {
+        return back()->withErrors([
+            'address' => '配送先住所を登録してください'
+        ]);
+    }
+
     if ($item->user_id === auth()->id()) {
         return redirect('/');
     }
@@ -39,7 +47,9 @@ class PurchaseController extends Controller
     Stripe::setApiKey(env('STRIPE_SECRET'));
 
     $checkout_session = \Stripe\Checkout\Session::create([
-        'payment_method_types' => ['card'],
+        'payment_method_types' => [
+            request('payment_method') === 'convenience' ? 'konbini' : 'card'
+        ],
         'line_items' => [[
             'price_data' => [
                 'currency' => 'jpy',

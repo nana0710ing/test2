@@ -30,8 +30,6 @@
         <div class="mypage__icon">
         @if(optional(auth()->user())->image)
             <img src="{{ asset(auth()->user()->image) }}" alt="プロフィール画像">
-        @else
-        <div class="mypage__no-image">画像なし</div>
         @endif
         </div>
 

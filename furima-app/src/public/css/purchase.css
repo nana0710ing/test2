@@ -33,3 +33,21 @@
     font-size: 24px;
     font-weight: bold;
 }
+
+.purchase__item {
+    display: flex;
+    gap: 30px;
+    align-items: flex-start;
+}
+
+.purchase__item img {
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+}
+
+.address-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}

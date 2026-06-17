@@ -1,16 +1,45 @@
 <link rel="stylesheet" href="{{ asset('css/common.css') }}">
 <link rel="stylesheet" href="{{ asset('css/purchase.css') }}">
 
+<header>
+    <div class="header-inner">
+        <h1>
+            <img src="{{ asset('images/logo.png') }}" alt="COACHTECH">
+        </h1>
+    <form class="serch-box" action="/" method="get">
+        <input type="text" name="keyword" value="{{ request('keyword') }}" placeholder="なにをお探しですか？">
+    </form>
+        <nav>
+            @guest
+                <a href="/login">ログイン</a>
+            @endguest
+
+            @auth
+                <form class="logout-form" action="/logout" method="post">
+                    @csrf
+                    <button class="logout-button" type="submit">ログアウト</button>
+                </form>
+            @endauth
+
+            <a href="/mypage">マイページ</a>
+            <a href="/sell">出品</a>
+        </nav>
+    </div>
+    </header>
+
 <div class="purchase">
 <div class="purchase__left">
 
-<h1>購入画面</h1>
+<div class="purchase__item">
+    <img src="{{ asset($item->img_url) }}" alt="{{ $item->name }}">
 
-<p>{{ $item->name }}</p>
+    <div>
+        <p>{{ $item->name }}</p>
+        <p>¥{{ number_format($item->price) }}</p>
+    </div>
+</div>
 
-<p>¥{{ number_format($item->price) }}</p>
-
-<img src="{{ asset($item->img_url) }}" alt="{{ $item->name }}" width="200">
+<hr>
 
 <form action="{{ route('purchase.store', $item->id) }}" method="POST">
     @csrf
@@ -21,6 +50,7 @@
     <option value="convenience">コンビニ払い</option>
     <option value="card">カード支払い</option>
 </select>
+<hr>
 
 @if ($errors->any())
     <div style="color: red;">
@@ -30,14 +60,17 @@
     </div>
 @endif
 
-<p>
-    配送先
-    <a href="/purchase/address/{{ $item->id }}">変更する</a>
-</p>
+<div class="address-header">
+    <p>配送先</p>
 
-<p>〒{{ $user->postal_code ?? '123-4567' }}</p>
+    <a href="/purchase/address/{{ $item->id }}">
+        変更する
+    </a>
+</div>
+<hr>
 
-<p>{{ $user->address ?? '東京都渋谷区〇〇1-2-3' }}</p>
+<p>〒{{ $user->postal_code }}</p>
+<p>{{ $user->address }}</p>
 
 @if($user->building)
     <p>{{ $user->building }}</p>

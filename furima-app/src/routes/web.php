@@ -9,6 +9,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SellController;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Foundation\Auth\EmailVerificationRequest;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -22,10 +23,15 @@ use Illuminate\Support\Facades\Auth;
 Route::get('/', [ItemController::class, 'index']);
 Route::get('/item/{item}', [ItemController::class, 'show']);
 Route::post('/like/{item}', [LikeController::class, 'store']);
-Route::post('/comment/{item_id}', [CommentController::class, 'store']);
+Route::post('/comment/{item_id}', [CommentController::class, 'store'])
+    ->middleware(['auth', 'verified']);
 Route::get('/mylist', [ItemController::class, 'mylist']);
-Route::get('/purchase/{item}', [PurchaseController::class, 'create'])->name('purchase.create');
-Route::post('/purchase/{item}', [PurchaseController::class, 'store'])->name('purchase.store');
+Route::get('/purchase/{item}', [PurchaseController::class, 'create'])
+    ->middleware(['auth', 'verified'])
+    ->name('purchase.create');
+Route::post('/purchase/{item}', [PurchaseController::class, 'store'])
+    ->middleware(['auth', 'verified'])
+    ->name('purchase.store');
 Route::get('/mypage/profile', function () {
     return view('profile.edit');
     })->middleware(['auth', 'verified']);
@@ -33,11 +39,16 @@ Route::post('/mypage/profile', [ProfileController::class, 'update']);
 Route::get('/mypage', function () {
     return view('mypage');
 })->middleware(['auth', 'verified']);
-Route::get('/sell', [SellController::class, 'create']);
-Route::post('/sell', [SellController::class, 'store']);
+Route::get('/sell', [SellController::class, 'create'])
+    ->middleware(['auth', 'verified']);
+
+Route::post('/sell', [SellController::class, 'store'])
+    ->middleware(['auth', 'verified']);
+
 Route::get('/purchase/address/{item_id}', function ($item_id) {
     return view('address', compact('item_id'));
-});
+})->middleware(['auth', 'verified']);
+
 Route::post('/purchase/address/{item_id}', function ($item_id) {
     $user = auth()->user();
 
@@ -48,7 +59,7 @@ Route::post('/purchase/address/{item_id}', function ($item_id) {
     ]);
 
     return redirect('/purchase/' . $item_id);
-});
+})->middleware(['auth', 'verified']);
 Route::post('/logout', function () {
     Auth::logout();
     return redirect('/login');
@@ -56,3 +67,8 @@ Route::post('/logout', function () {
 
 Route::get('/purchase/success/{item}', [PurchaseController::class, 'success'])
     ->name('purchase.success');
+Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
+    $request->fulfill();
+
+    return redirect('/mypage/profile');
+})->middleware(['auth', 'signed'])->name('verification.verify');

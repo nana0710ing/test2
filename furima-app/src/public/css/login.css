@@ -69,3 +69,21 @@ button {
     text-align: center;
     margin-top: 15px;
 }
+
+.error-message {
+    width: 500px;
+    margin: 0 auto 30px;
+    color: red;
+}
+
+.error-message p {
+    color: red;
+}
+
+.form-group label {
+    display: block;
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #000;
+}

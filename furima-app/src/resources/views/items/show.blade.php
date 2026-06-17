@@ -39,7 +39,7 @@
                     @csrf
                     <button type="submit" class="favorite-button">
 
-                    @if($item->likes->where('user_id', 1)->count())
+                    @if($item->likes->where('user_id', Auth::id())->count())
                         <img src="{{ asset('images/heart.pink.png') }}" alt="">
                     @else
                         <img src="{{ asset('images/heart.png') }}" alt="">

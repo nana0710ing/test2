@@ -10,7 +10,7 @@ class LikeController extends Controller
 {
     public function store($item_id)
     {
-        $like = Like::where('user_id', 1)
+        $like = Like::where('user_id', Auth::id())
             ->where('item_id', $item_id)
             ->first();
 
@@ -18,7 +18,7 @@ class LikeController extends Controller
             $like->delete();
         } else {
             Like::create([
-                'user_id' => 1,
+                'user_id' => Auth::id(),
                 'item_id' => $item_id,
             ]);
         }
