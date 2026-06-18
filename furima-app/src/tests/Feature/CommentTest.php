@@ -54,4 +54,38 @@ class CommentTest extends TestCase
 
         $response->assertSessionHasErrors('comment');
     }
+
+    public function test_comment_must_be_255_characters_or_less(): void
+    {
+        $user = User::first();
+        $user->email_verified_at = now();
+        $user->save();
+
+        $item = Item::first();
+
+        $response = $this->actingAs($user)->post('/comment/' . $item->id, [
+            'comment' => str_repeat('あ', 256),
+        ]);
+
+        $response->assertSessionHasErrors('comment');
+    }
+
+    public function test_login_user_can_post_comment(): void
+    {
+        $user = User::first();
+        $user->email_verified_at = now();
+        $user->save();
+
+        $item = Item::first();
+
+        $response = $this->actingAs($user)->post('/comment/' . $item->id, [
+            'comment' => 'テストコメント',
+        ]);
+
+        $this->assertDatabaseHas('comments', [
+            'user_id' => $user->id,
+            'item_id' => $item->id,
+            'comment' => 'テストコメント',
+        ]);
+    }
 }
