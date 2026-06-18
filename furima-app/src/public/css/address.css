@@ -1,0 +1,97 @@
+body {
+    margin: 0;
+    padding: 0;
+}
+
+.address-container {
+    max-width: 680px;
+    margin: 50px auto;
+}
+
+.address-title {
+    text-align: center;
+    font-size: 32px;
+    font-weight: bold;
+    margin-bottom: 60px;
+}
+
+.form-group {
+    margin-bottom: 40px;
+}
+
+.form-group label {
+    display: block;
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.form-group input {
+    width: 100%;
+    height: 45px;
+    border: 1px solid #5F5F5F;
+    border-radius: 4px;
+}
+
+.update-btn {
+    width: 100%;
+    height: 50px;
+    background: #FF5555;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 20px;
+    font-weight: bold;
+    margin-top: 40px;
+    cursor: pointer;
+}
+
+header {
+    background: #000;
+    height: 80px;
+}
+
+.header-inner {
+    display: flex;
+    align-items: center;
+    height: 100%;
+    padding: 0 40px;
+    gap: 40px;
+}
+
+.header-inner h1 img {
+    width: 300px;
+}
+
+.search-box input {
+    width: 400px;
+    height: 40px;
+}
+
+.header-inner nav {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    gap: 25px;
+}
+
+.header-inner nav a,
+.logout-button {
+    color: #fff;
+    font-size: 18px;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.logout-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+.header-inner nav a:last-child {
+    background: #fff;
+    color: #000;
+    padding: 10px 18px;
+    border-radius: 4px;
+}

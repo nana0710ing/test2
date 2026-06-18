@@ -61,3 +61,8 @@ php artisan db:seed
 
 MailHog:
 http://localhost:8025
+
+## テストアカウント
+
+- メールアドレス: test@example.com
+- パスワード: password
