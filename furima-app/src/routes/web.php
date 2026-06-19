@@ -22,7 +22,8 @@ use Illuminate\Foundation\Auth\EmailVerificationRequest;
 */
 Route::get('/', [ItemController::class, 'index']);
 Route::get('/item/{item}', [ItemController::class, 'show']);
-Route::post('/like/{item}', [LikeController::class, 'store']);
+Route::post('/like/{item}', [LikeController::class, 'store'])
+    ->middleware(['auth', 'verified']);
 Route::post('/comment/{item_id}', [CommentController::class, 'store'])
     ->middleware(['auth', 'verified']);
 Route::get('/mylist', [ItemController::class, 'mylist']);

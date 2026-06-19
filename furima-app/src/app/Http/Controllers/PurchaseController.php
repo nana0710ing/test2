@@ -23,58 +23,58 @@ class PurchaseController extends Controller
     }
 
     public function store($item_id)
-{
-    $item = Item::findOrFail($item_id);
+    {
+        $item = Item::findOrFail($item_id);
 
-    $user = auth()->user();
+        $user = auth()->user();
 
-    if (empty($user->postal_code) || empty($user->address)) {
-        return back()->withErrors([
-            'address' => '配送先住所を登録してください'
+        if (empty($user->postal_code) || empty($user->address)) {
+            return back()->withErrors([
+                'address' => '配送先住所を登録してください'
+            ]);
+        }
+
+        if ($item->user_id === auth()->id()) {
+            return redirect('/');
+        }
+
+        request()->validate([
+            'payment_method' => 'required',
+        ], [
+            'payment_method.required' => '支払い方法を選択してください',
         ]);
-    }
 
-    if ($item->user_id === auth()->id()) {
-        return redirect('/');
-    }
+        Stripe::setApiKey(env('STRIPE_SECRET'));
 
-    request()->validate([
-        'payment_method' => 'required',
-    ], [
-        'payment_method.required' => '支払い方法を選択してください',
-    ]);
-
-    Stripe::setApiKey(env('STRIPE_SECRET'));
-
-    $checkout_session = \Stripe\Checkout\Session::create([
-        'payment_method_types' => [
-            request('payment_method') === 'convenience' ? 'konbini' : 'card'
-        ],
-        'line_items' => [[
-            'price_data' => [
+        $checkout_session = \Stripe\Checkout\Session::create([
+            'payment_method_types' => [
+                request('payment_method') === 'convenience' ? 'konbini' : 'card'
+            ],
+                'line_items' => [[
+                'price_data' => [
                 'currency' => 'jpy',
                 'product_data' => [
                     'name' => $item->name,
                 ],
                 'unit_amount' => $item->price,
-            ],
-            'quantity' => 1,
-        ]],
-        'mode' => 'payment',
-        'success_url' => url('/purchase/success/' . $item_id),
-        'cancel_url' => url('/purchase/' . $item_id),
-    ]);
+                ],
+                'quantity' => 1,
+                ]],
+                'mode' => 'payment',
+                'success_url' => url('/purchase/success/' . $item_id),
+                'cancel_url' => url('/purchase/' . $item_id),
+        ]);
 
-    return redirect($checkout_session->url);
-}
+        return redirect($checkout_session->url);
+    }
 
-public function success($item_id)
-{
-    Purchase::firstOrCreate([
-        'user_id' => auth()->id(),
-        'item_id' => $item_id,
-    ]);
+    public function success($item_id)
+    {
+        Purchase::firstOrCreate([
+            'user_id' => auth()->id(),
+            'item_id' => $item_id,
+        ]);
 
-    return redirect('/');
-}
+            return redirect('/');
+            }
 }
