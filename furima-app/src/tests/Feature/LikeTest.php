@@ -2,16 +2,52 @@
 
 namespace Tests\Feature;
 
-use Tests\TestCase;
 use App\Models\User;
-use App\Models\Item;
-use App\Models\Like;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\DB;
+use Tests\TestCase;
 
 class LikeTest extends TestCase
 {
+    use RefreshDatabase;
+
+    private function createItem()
+    {
+        $seller = User::factory()->create();
+
+        DB::table('categories')->insert([
+            'id' => 1,
+            'name' => 'カテゴリ1',
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+
+        DB::table('conditions')->insert([
+            'id' => 1,
+            'name' => '良好',
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+
+        DB::table('items')->insert([
+            'id' => 1,
+            'user_id' => $seller->id,
+            'name' => 'テスト商品',
+            'price' => 1000,
+            'description' => 'テスト説明',
+            'condition_id' => 1,
+            'category_id' => 1,
+            'img_url' => 'test.jpg',
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+
+        return DB::table('items')->first();
+    }
+
     public function test_guest_cannot_like_item(): void
     {
-        $item = Item::first();
+        $item = $this->createItem();
 
         $response = $this->post('/like/' . $item->id);
 
@@ -20,17 +56,17 @@ class LikeTest extends TestCase
 
     public function test_login_user_can_like_item(): void
     {
-        $user = User::first();
-        $user->email_verified_at = now();
-        $user->save();
+        $user = User::factory()->create([
+            'email_verified_at' => now(),
+        ]);
 
-        $item = Item::first();
+        $item = $this->createItem();
 
-        Like::where('user_id', $user->id)
+        DB::table('likes')->where('user_id', $user->id)
             ->where('item_id', $item->id)
             ->delete();
 
-        $response = $this->actingAs($user)->post('/like/' . $item->id);
+        $this->actingAs($user)->post('/like/' . $item->id);
 
         $this->assertDatabaseHas('likes', [
             'user_id' => $user->id,
@@ -40,18 +76,20 @@ class LikeTest extends TestCase
 
     public function test_login_user_can_unlike_item(): void
     {
-        $user = User::first();
-        $user->email_verified_at = now();
-        $user->save();
-
-        $item = Item::first();
-
-        Like::firstOrCreate([
-            'user_id' => $user->id,
-            'item_id' => $item->id,
+        $user = User::factory()->create([
+            'email_verified_at' => now(),
         ]);
 
-        $response = $this->actingAs($user)->post('/like/' . $item->id);
+        $item = $this->createItem();
+
+        DB::table('likes')->insert([
+            'user_id' => $user->id,
+            'item_id' => $item->id,
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+
+        $this->actingAs($user)->post('/like/' . $item->id);
 
         $this->assertDatabaseMissing('likes', [
             'user_id' => $user->id,

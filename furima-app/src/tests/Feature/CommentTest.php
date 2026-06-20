@@ -8,12 +8,12 @@ use Tests\TestCase;
 use App\Models\Item;
 use App\Models\User;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\DB;
 
 class CommentTest extends TestCase
 {
-    /**
-     * A basic feature test example.
-     */
+    use RefreshDatabase;
+
     public function test_example(): void
     {
 
@@ -31,7 +31,7 @@ class CommentTest extends TestCase
 
     public function test_guest_cannot_post_comment(): void
     {
-        $item = Item::first();
+        $item = $this->createItem();
 
         $response = $this->post('/comment/' . $item->id, [
             'comment' => 'テストコメント',
@@ -42,11 +42,11 @@ class CommentTest extends TestCase
 
     public function test_comment_is_required(): void
     {
-        $user = User::first();
-        $user->email_verified_at = now();
-        $user->save();
+        $user = User::factory()->create([
+            'email_verified_at' => now(),
+        ]);
 
-        $item = Item::first();
+        $item = $this->createItem();
 
         $response = $this->actingAs($user)->post('/comment/' . $item->id, [
             'comment' => '',
@@ -57,11 +57,11 @@ class CommentTest extends TestCase
 
     public function test_comment_must_be_255_characters_or_less(): void
     {
-        $user = User::first();
-        $user->email_verified_at = now();
-        $user->save();
+        $user = User::factory()->create([
+            'email_verified_at' => now(),
+        ]);
 
-        $item = Item::first();
+        $item = $this->createItem();
 
         $response = $this->actingAs($user)->post('/comment/' . $item->id, [
             'comment' => str_repeat('あ', 256),
@@ -72,11 +72,11 @@ class CommentTest extends TestCase
 
     public function test_login_user_can_post_comment(): void
     {
-        $user = User::first();
-        $user->email_verified_at = now();
-        $user->save();
+        $user = User::factory()->create([
+            'email_verified_at' => now(),
+        ]);
 
-        $item = Item::first();
+        $item = $this->createItem();
 
         $response = $this->actingAs($user)->post('/comment/' . $item->id, [
             'comment' => 'テストコメント',
@@ -86,6 +86,36 @@ class CommentTest extends TestCase
             'user_id' => $user->id,
             'item_id' => $item->id,
             'comment' => 'テストコメント',
+        ]);
+    }
+
+    private function createItem()
+    {
+        $user = User::factory()->create();
+
+        DB::table('categories')->insert([
+            'id' => 1,
+            'name' => 'カテゴリ1',
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+
+        DB::table('conditions')->insert([
+            'id' => 1,
+            'name' => '良好',
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+
+        return Item::create([
+            'name' => 'テスト商品',
+            'brand_name' => 'テストブランド',
+            'price' => 1000,
+            'description' => 'テスト説明',
+            'condition_id' => 1,
+            'category_id' => 1,
+            'img_url' => 'test.jpg',
+            'user_id' => $user->id,
         ]);
     }
 }
