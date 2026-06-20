@@ -58,6 +58,13 @@ class ItemDetailTest extends TestCase
             'updated_at' => now(),
         ]);
 
+        DB::table('likes')->insert([
+            'user_id' => $user->id,
+            'item_id' => 1,
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+
         $item = DB::table('items')->first();
 
         $response = $this->get('/item/' . $item->id);
@@ -73,6 +80,7 @@ class ItemDetailTest extends TestCase
         $response->assertSee('0');
         $response->assertSee('テストコメント');
         $response->assertSee($user->name);
+        $response->assertSee('1');
     }
 
 }
