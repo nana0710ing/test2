@@ -29,7 +29,9 @@ class LoginTest extends TestCase
 
     public function test_login_fails_with_invalid_credentials(): void
     {
-        $user = User::first();
+        $user = User::factory()->create([
+            'password' => bcrypt('password'),
+        ]);
 
         $response = $this->post('/login', [
             'email' => $user->email,
@@ -41,7 +43,9 @@ class LoginTest extends TestCase
 
     public function    test_user_can_login_with_correct_credentials(): void
     {
-        $user = User::first();
+        $user = User::factory()->create([
+            'password' => bcrypt('password'),
+        ]);
 
         $response = $this->post('/login', [
             'email' => $user->email,

@@ -4,12 +4,15 @@ namespace Tests\Feature;
 
 use Tests\TestCase;
 use App\Models\User;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class LogoutTest extends TestCase
 {
+    use RefreshDatabase;
+
     public function test_user_can_logout(): void
     {
-        $user = User::first();
+        $user = User::factory()->create();
 
         $this->actingAs($user);
 

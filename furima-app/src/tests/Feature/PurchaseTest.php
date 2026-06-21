@@ -77,6 +77,47 @@ class PurchaseTest extends TestCase
         $response->assertSee('Sold');
     }
 
+    public function test_selected_payment_method_is_displayed_on_purchase_page(): void
+    {
+        $user = User::factory()->create([
+            'email_verified_at' => now(),
+            'postal_code' => '123-4567',
+            'address' => '東京都渋谷区',
+        ]);
+
+        $item = $this->createItem();
+
+        $response = $this->actingAs($user)
+            ->get('/purchase/' . $item->id . '?payment_method=card');
+
+        $response->assertStatus(200);
+        $response->assertSee('カード支払い');
+    }
+
+    public function test_changed_shipping_address_is_displayed_on_purchase_page(): void
+    {
+        $user = User::factory()->create([
+            'email_verified_at' => now(),
+            'postal_code' => '123-4567',
+            'address' => '東京都渋谷区',
+        ]);
+
+        $item = $this->createItem();
+
+        $this->actingAs($user)->post('/purchase/address/' . $item->id, [
+            'postal_code' => '987-6543',
+            'address' => '大阪府大阪市',
+            'building' => 'テストマンション101',
+        ]);
+
+        $response = $this->actingAs($user)->get('/purchase/' . $item->id);
+
+        $response->assertStatus(200);
+        $response->assertSee('987-6543');
+        $response->assertSee('大阪府大阪市');
+        $response->assertSee('テストマンション101');
+    }
+
     private function createItem()
     {
             $seller = User::factory()->create();
