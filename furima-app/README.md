@@ -55,12 +55,25 @@ php artisan db:seed
 - マイリスト機能
 - プロフィール編集
 - 配送先変更
+- メール認証
+- テストコード実装
 
 メール認証機能を実装しています。
 認証メールはMailHogで確認できます。
 
 MailHog:
 http://localhost:8025
+
+## テスト
+
+```bash
+php artisan test
+```
+
+実行結果
+
+- 41 passed
+- 97 assertions
 
 ## テストアカウント
 
