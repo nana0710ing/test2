@@ -54,9 +54,32 @@ class PurchaseTest extends TestCase
         $response->assertSee('テスト商品');
     }
 
+    public function test_purchased_item_is_displayed_as_sold(): void
+    {
+        $user = User::factory()->create([
+            'email_verified_at' => now(),
+            'postal_code' => '123-4567',
+            'address' => '東京都渋谷区',
+        ]);
+
+        $item = $this->createItem();
+
+        DB::table('purchases')->insert([
+            'user_id' => $user->id,
+            'item_id' => $item->id,
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+
+        $response = $this->get('/');
+
+        $response->assertStatus(200);
+        $response->assertSee('Sold');
+    }
+
     private function createItem()
     {
-        $seller = User::factory()->create();
+            $seller = User::factory()->create();
 
         DB::table('categories')->insert([
             'id' => 1,
