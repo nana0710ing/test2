@@ -73,9 +73,14 @@
 
         <div class="info">
             <p>カテゴリー</p>
-            @foreach ($item->categories as $category)
-                <span>{{ $category->name }}</span>
-            @endforeach
+
+            @if ($item->categories->count())
+                @foreach ($item->categories as $category)
+                    <span>{{ $category->name }}</span>
+                @endforeach
+            @else
+                    <span>{{ $item->category->name ?? '' }}</span>
+            @endif
         </div>
 
         <div class="info">
